@@ -31,6 +31,15 @@ window.onload = function()
 
         init();
 
+        function Snake(body)
+        {
+          this.body = body;
+          this.draw = function()
+          {
+
+          };
+        }
+
 
 
 
