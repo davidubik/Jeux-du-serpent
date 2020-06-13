@@ -1,6 +1,8 @@
 window.onload = function()
 {
-  let canvas;
+  let canvasWidth = 900;
+  let canvasHeight = 600;
+  let blockSize = 30;
   let ctx;
   let delay = 100;
   let xCoord = 0;
@@ -8,7 +10,7 @@ window.onload = function()
 
   function init()
   {
-    canvas = document.createElement('canvas');
+    let canvas = document.createElement('canvas');
     canvas.width = 900;
     canvas.height = 600;
     canvas.style.border = "1px solid grey";
@@ -21,7 +23,7 @@ window.onload = function()
     {
       xCoord += 2;
       yCoord += 2;
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       ctx.fillStyle = "red";
       ctx.fillRect(xCoord,yCoord, 100, 50);
       setTimeout(refreshCanvas,delay);
