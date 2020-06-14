@@ -24,6 +24,7 @@ window.onload = function()
     function refreshCanvas()
     {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+      snakee.advence();
       snakee.draw();
       setTimeout(refreshCanvas,delay);
     }
@@ -43,6 +44,12 @@ window.onload = function()
           drawBlock(ctx, this.body[i]);
         }
         ctx.restore();
+      };
+      this.advence = function(){
+        let nextPosition = this.body[0].slice();
+        nextPosition[0] += 1;
+        this.body.unshift(nextPosition);
+        this.body.pop();
       };
     }
 
