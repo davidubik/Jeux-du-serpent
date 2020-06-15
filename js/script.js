@@ -17,7 +17,7 @@ window.onload = function()
     canvas.style.border = "1px solid grey";
     document.body.appendChild(canvas);
     ctx = canvas.getContext('2d');
-    snakee = new Snake([[6,4], [5,4], [4,4]]);
+    snakee = new Snake([[6,4], [5,4], [4,4]], "right");
     refreshCanvas();
   }
 
@@ -35,8 +35,9 @@ window.onload = function()
       ctx.fillRect(x, y, blockSize, blockSize)
     }
 
-    function Snake(body){
+    function Snake(body, direction){
       this.body = body;
+      this.direction = direction;
       this.draw = function(){
         ctx.save();
         ctx.fillStyle = "red";
