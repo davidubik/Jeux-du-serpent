@@ -9,6 +9,7 @@ window.onload = function()
   let applee;
   let widthInBlocks = canvasWidth/blockSize;
   let heightInBlocks = canvasHeight/blockSize;
+
   init();
 
   function init()
@@ -31,6 +32,9 @@ window.onload = function()
         // GAME OVER
       }
       else {
+        if (snakee.isEatingApple(applee)) {
+          applee.setNewPosition();
+        }
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         snakee.draw();
         applee.draw();
@@ -121,6 +125,16 @@ window.onload = function()
         }
         return wallCollision || snakeCollision;
       };
+      this.isEatingApple = (appleToEat) =>
+      {
+        let head = this.body[0];
+        if (head[0] === appleToEat.position[0] && head[1] === appleToEat.position[1]) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      };
     }
 
     function Apple(position){ // Fonction constructeur de la pomme
@@ -135,6 +149,11 @@ window.onload = function()
         ctx.arc(x, y, radius, 0, Math.PI*2, true);
         ctx.fill();
         ctx.restore();
+      };
+      this.setNewPosition = () =>{ // METHOD POUR QUE LA POMME CHANGE DE POSITION QUAND ELLE À ÉTÉ MANGER PAR LER SERPENT
+        let newX = Math.round(Math.random() * (widthInBlocks -1));
+        let newY = Math.round(Math.random() * (heightInBlocks -1));
+        this.position =[newX, newY];
       };
     }
 
