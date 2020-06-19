@@ -1,12 +1,14 @@
 window.onload = function()
 {
-  let canvasWidth = 900;
-  let canvasHeight = 600;
-  let blockSize = 30;
+  let canvasWidth = 900;  //largeur du canvas de contour
+  let canvasHeight = 600; // hauteur du canvas de contour
+  let blockSize = 30; // taille des blocks du serpent
   let ctx;
   let delay = 100;
   let snakee;
   let applee;
+  let widthInBlocks = canvasWidth/blockSize;
+  let heightInBlocks = canvasHeight/blockSize;
   init();
 
   function init()
@@ -24,11 +26,17 @@ window.onload = function()
 
     function refreshCanvas()
     {
-      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       snakee.advence();
-      snakee.draw();
-      applee.draw();
-      setTimeout(refreshCanvas,delay);
+      if (snakee.checkCollision()) {
+        // GAME OVER
+      }
+      else {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        snakee.draw();
+        applee.draw();
+        setTimeout(refreshCanvas,delay);
+      }
+
     }
 
     function drawBlock(ctx, position){
@@ -37,7 +45,7 @@ window.onload = function()
       ctx.fillRect(x, y, blockSize, blockSize)
     }
 
-    function Snake(body, direction){
+    function Snake(body, direction){ // constructor du serpent
       this.body = body;
       this.direction = direction;
       this.draw = function(){
@@ -48,7 +56,7 @@ window.onload = function()
         }
         ctx.restore();
       };
-      this.advence = function(){
+      this.advence = function(){  // animation du serpent
         let nextPosition = this.body[0].slice();
         switch (this.direction) {
           case "left":
@@ -88,6 +96,31 @@ window.onload = function()
           this.direction = newDirection;
         }
       };
+      this.checkCollision = () =>{
+
+        let wallCollision = false;
+        let snakeCollision = false;
+        let head = this.body[0];
+        let rest = this.body.slice(1);
+        let snakeX = head[0];
+        let snakeY = head[1];
+        let minX = 0;
+        let minY = 0;
+        let maxX = widthInBlocks -1;
+        let maxY = heightInBlocks -1;
+        let isNotBetweenHorizontalWalls = snakeX < minX || snakeX >  maxX;
+        let isNotBetweenVerticalWalls = snakeY < minY || snakeY >  maxY;
+
+        if (isNotBetweenHorizontalWalls || isNotBetweenVerticalWalls) {
+          wallCollision = true;
+        }
+        for(let i in rest){
+          if (snakeX === rest[i][0] && snakeY === rest[i][1]){
+            snakeCollision = true;
+          }
+        }
+        return wallCollision || snakeCollision;
+      };
     }
 
     function Apple(position){
@@ -105,7 +138,7 @@ window.onload = function()
       };
     }
 
-    document.onkeydown = function handleKeyDown(e){
+    document.onkeydown = function handleKeyDown(e){  // fonction couplé d'un évènement pour diriger le serpent
       let key = e.keyCode;
       let newDirection;
       switch(key){
