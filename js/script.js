@@ -19,7 +19,7 @@ window.onload = function()
     canvas.style.border = "1px solid grey";
     document.body.appendChild(canvas);
     ctx = canvas.getContext('2d');
-    snakee = new Snake([[6,4], [5,4], [4,4]], "right");
+    snakee = new Snake([[7,4],[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
     applee = new Apple([10, 10]);
     refreshCanvas();
   }
@@ -56,7 +56,7 @@ window.onload = function()
         }
         ctx.restore();
       };
-      this.advence = function(){  // animation du serpent
+      this.advence = function(){  // Method pour l'animation du serpent
         let nextPosition = this.body[0].slice();
         switch (this.direction) {
           case "left":
@@ -78,7 +78,7 @@ window.onload = function()
         this.body.pop();
       };
 
-      this.setDirection = function (newDirection){
+      this.setDirection = function (newDirection){ //Method pour diriger le serpent
         let allowedDirections;
         switch (this.direction) {
           case "left":
@@ -96,7 +96,7 @@ window.onload = function()
           this.direction = newDirection;
         }
       };
-      this.checkCollision = () =>{
+      this.checkCollision = () =>{ // Method pour que le serpent se cogne contre un mur et ne sorte pas de Canvas
 
         let wallCollision = false;
         let snakeCollision = false;
@@ -123,22 +123,22 @@ window.onload = function()
       };
     }
 
-    function Apple(position){
+    function Apple(position){ // Fonction constructeur de la pomme
       this.position = position;
       this.draw = function(){
         ctx.save();
         ctx.fillStyle = "chartreuse";
         ctx.beginPath();
         let radius = blockSize / 2;
-        let x = position[0] * blockSize + radius;
-        let y = position[1] * blockSize + radius;
+        let x = this.position[0] * blockSize + radius;
+        let y = this.position[1] * blockSize + radius;
         ctx.arc(x, y, radius, 0, Math.PI*2, true);
         ctx.fill();
         ctx.restore();
       };
     }
 
-    document.onkeydown = function handleKeyDown(e){  // fonction couplé d'un évènement pour diriger le serpent
+    document.onkeydown = function handleKeyDown(e){  //Method couplé d'un évènement pour diriger le serpent
       let key = e.keyCode;
       let newDirection;
       switch(key){
