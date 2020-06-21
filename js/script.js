@@ -20,7 +20,7 @@ window.onload = function()
     canvas.style.border = "1px solid grey";
     document.body.appendChild(canvas);
     ctx = canvas.getContext('2d');
-    snakee = new Snake([[7,4],[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
+    snakee = new Snake([[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
     applee = new Apple([10, 10]);
     refreshCanvas();
   }
@@ -33,13 +33,13 @@ window.onload = function()
         alert('GAME OVER');
       }
       else {
-        if (snakee.isEatingApple(applee)) {
-
+        if (snakee.isEatingApple(applee)) { // SI LE SERPENT A MANGER LA POMME
+            snakee.ateApple = true;
             do
             {
-                applee.setNewPosition();
+                applee.setNewPosition(); // DONNE LUI UNE NOUVELLE POSITION
             }
-             while (applee.isOnSnake(snakee));
+             while (applee.isOnSnake(snakee)); // VÉRIFIE SI APPLEE EST SUR LE SERPENT SI LA POMME EST SUR LE SERPENT ON LUI REODNNE UNE NOUVELLE POSITION TANT QUE CELLE CI SE TROUVE SUR LE SERPENT
 
         }
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -59,6 +59,7 @@ window.onload = function()
     function Snake(body, direction){ // constructor du serpent
       this.body = body;
       this.direction = direction;
+      this.ateApple = false;
       this.draw = function(){
         ctx.save();
         ctx.fillStyle = "red";
@@ -86,7 +87,10 @@ window.onload = function()
             throw("Invalid Direction");
         }
         this.body.unshift(nextPosition);
+        if(!this.ateApple)
         this.body.pop();
+        else
+        this.ateApple = false;
       };
 
       this.setDirection = function (newDirection){ //Method pour diriger le serpent
