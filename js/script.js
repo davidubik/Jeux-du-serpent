@@ -30,10 +30,17 @@ window.onload = function()
       snakee.advence();
       if (snakee.checkCollision()) {
         // GAME OVER
+        alert('GAME OVER');
       }
       else {
         if (snakee.isEatingApple(applee)) {
-          applee.setNewPosition();
+
+            do
+            {
+                applee.setNewPosition();
+            }
+             while (applee.isOnSnake(snakee));
+
         }
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         snakee.draw();
@@ -137,7 +144,7 @@ window.onload = function()
       };
     }
 
-    function Apple(position){ // Fonction constructeur de la pomme
+    function Apple(position){ // FONCTION CONSTRUCTEUR DE LA POMME
       this.position = position;
       this.draw = function(){
         ctx.save();
@@ -154,6 +161,17 @@ window.onload = function()
         let newX = Math.round(Math.random() * (widthInBlocks -1));
         let newY = Math.round(Math.random() * (heightInBlocks -1));
         this.position =[newX, newY];
+      };
+      this.isOnSnake = (snakeToCheck) =>{ // METHOD QUI PERMET D'ÉVITER QUE LE POMME APPARAISSE SUR LE SERPENT
+
+        let isOnSnake = false;
+        for(let i in snakeToCheck.body) // LA BOUCLE PASSE SUR TOUTE LA LONGUEUR DU CORPS DU SERPENT
+          {
+            if (this.position[0] === snakeToCheck.body[i][0] && this.position[1] === snakeToCheck.body[i][1]){ // ON FÉRIFIE QUE LA POMME NE SE TROUVE PAS SUR LE X OU SUR LE Y
+               isOnSnake = true;
+            }
+          }
+        return isOnSnake;
       };
     }
 
