@@ -9,6 +9,7 @@ window.onload = function()
   let applee;
   let widthInBlocks = canvasWidth/blockSize;
   let heightInBlocks = canvasHeight/blockSize;
+  let score;
 
   init();
 
@@ -22,6 +23,7 @@ window.onload = function()
     ctx = canvas.getContext('2d');
     snakee = new Snake([[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
     applee = new Apple([10, 10]);
+    score = 0;
     refreshCanvas();
   }
 
@@ -34,6 +36,7 @@ window.onload = function()
       }
       else {
         if (snakee.isEatingApple(applee)) { // SI LE SERPENT A MANGER LA POMME
+            score++;
             snakee.ateApple = true;
             do
             {
@@ -45,6 +48,7 @@ window.onload = function()
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         snakee.draw();
         applee.draw();
+        drawScore();
         setTimeout(refreshCanvas,delay);
       }
 
@@ -60,7 +64,14 @@ window.onload = function()
     function restart(){
       snakee = new Snake([[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
       applee = new Apple([10, 10]);
+      score = 0;
       refreshCanvas();
+    }
+
+    function drawScore() {
+      ctx.save();
+      ctx.fillText(score.toString(), 5, canvasHeight - 5);
+      ctx.restore();
     }
 
     function drawBlock(ctx, position){
