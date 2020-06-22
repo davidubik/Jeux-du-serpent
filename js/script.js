@@ -49,9 +49,9 @@ window.onload = function()
 
         }
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        drawScore();
         snakee.draw();
         applee.draw();
-        drawScore();
         setTimeout(refreshCanvas,delay);
       }
 
@@ -76,6 +76,7 @@ window.onload = function()
       ctx.font = "bold 200px sans-serif";
       ctx.fillStyle = "gray";
       ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
       let centerX = canvasWidth / 2;
       let centerY = canvasHeight / 2;
       ctx.fillText(score.toString(), centerX, centerY);
