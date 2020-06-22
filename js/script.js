@@ -21,6 +21,7 @@ window.onload = function()
     canvas.style.border = "30px solid grey";
     canvas.style.margin = "50px auto";
     canvas.style.display = "block";
+    canvas.style.backgroundColor = "#ddd";
     document.body.appendChild(canvas);
     ctx = canvas.getContext('2d');
     snakee = new Snake([[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
@@ -72,6 +73,8 @@ window.onload = function()
 
     function drawScore() {
       ctx.save();
+      ctx.font = "bold 200px sans-serif";
+      ctx.fillStyle = "gray";
       ctx.fillText(score.toString(), 5, canvasHeight - 5);
       ctx.restore();
     }
