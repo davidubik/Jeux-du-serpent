@@ -18,7 +18,9 @@ window.onload = function()
     let canvas = document.createElement('canvas');
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
-    canvas.style.border = "1px solid grey";
+    canvas.style.border = "30px solid grey";
+    canvas.style.margin = "50px auto";
+    canvas.style.display = "block";
     document.body.appendChild(canvas);
     ctx = canvas.getContext('2d');
     snakee = new Snake([[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
