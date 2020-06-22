@@ -59,8 +59,19 @@ window.onload = function()
 
     function gameOver(){ // FONCTION QUI INDIQUE "Game Over".
       ctx.save();
-      ctx.fillText("GAME OVER", 5, 15);
-      ctx.fillText("Appuyer sur la touche Espace pour rejouer", 5, 30)
+      ctx.font = "bold 70px sans-serif";
+      ctx.fillStyle = "#000";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 3; // petit beug sur le contour du M à partir de 4px
+      let centerX = canvasWidth / 2;
+      let centerY = canvasHeight / 2;
+      ctx.strokeText("GAME OVER", centerX, centerY - 180);
+      ctx.fillText("GAME OVER", centerX, centerY - 180);
+      ctx.font = "bold 30px sans-serif";
+      ctx.strokeText("Appuyer sur la touche Espace pour rejouer", centerX, centerY - 120);
+      ctx.fillText("Appuyer sur la touche Espace pour rejouer", centerX, centerY - 120);
       ctx.restore();
     }
 
