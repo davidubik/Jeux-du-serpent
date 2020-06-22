@@ -29,8 +29,8 @@ window.onload = function()
     {
       snakee.advence();
       if (snakee.checkCollision()) {
-        // GAME OVER
-        alert('GAME OVER');
+        gameOver();
+
       }
       else {
         if (snakee.isEatingApple(applee)) { // SI LE SERPENT A MANGER LA POMME
@@ -48,6 +48,13 @@ window.onload = function()
         setTimeout(refreshCanvas,delay);
       }
 
+    }
+
+    function gameOver(){
+      ctx.save();
+      ctx.fillText("GAME OVER", 5, 15);
+
+      ctx.restore();
     }
 
     function drawBlock(ctx, position){
@@ -87,7 +94,7 @@ window.onload = function()
             throw("Invalid Direction");
         }
         this.body.unshift(nextPosition);
-        if(!this.ateApple)
+        if(!this.ateApple) // SI LE ateApple EST DIFFÉRENT (!)
         this.body.pop();
         else
         this.ateApple = false;
