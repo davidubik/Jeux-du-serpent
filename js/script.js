@@ -75,7 +75,10 @@ window.onload = function()
       ctx.save();
       ctx.font = "bold 200px sans-serif";
       ctx.fillStyle = "gray";
-      ctx.fillText(score.toString(), 5, canvasHeight - 5);
+      ctx.textAlign = "center";
+      let centerX = canvasWidth / 2;
+      let centerY = canvasHeight / 2;
+      ctx.fillText(score.toString(), centerX, centerY);
       ctx.restore();
     }
 
