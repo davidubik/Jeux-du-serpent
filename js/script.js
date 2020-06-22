@@ -50,11 +50,17 @@ window.onload = function()
 
     }
 
-    function gameOver(){
+    function gameOver(){ // FONCTION QUI INDIQUE "Game Over".
       ctx.save();
       ctx.fillText("GAME OVER", 5, 15);
-
+      ctx.fillText("Appuyer sur la touche Espace pour rejouer", 5, 30)
       ctx.restore();
+    }
+
+    function restart(){
+      snakee = new Snake([[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
+      applee = new Apple([10, 10]);
+      refreshCanvas();
     }
 
     function drawBlock(ctx, position){
@@ -202,6 +208,9 @@ window.onload = function()
         case 40 :
           newDirection = "down";
           break;
+          case 32 :
+          restart()
+          return;
           default:
             return;
       }
