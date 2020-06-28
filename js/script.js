@@ -46,8 +46,11 @@ window.onload = function()
             do
             {
                 applee.setNewPosition(); // DONNE LUI UNE NOUVELLE POSITION
+            } while (applee.isOnSnake(snakee)); // VÉRIFIE SI APPLEE EST SUR LE SERPENT SI LA POMME EST SUR LE SERPENT ON LUI REODNNE UNE NOUVELLE POSITION TANT QUE CELLE CI SE TROUVE SUR LE SERPENT
+
+            if(score % 5 == 0){
+              speedUp();
             }
-             while (applee.isOnSnake(snakee)); // VÉRIFIE SI APPLEE EST SUR LE SERPENT SI LA POMME EST SUR LE SERPENT ON LUI REODNNE UNE NOUVELLE POSITION TANT QUE CELLE CI SE TROUVE SUR LE SERPENT
 
         }
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -57,6 +60,10 @@ window.onload = function()
         timeout = setTimeout(refreshCanvas,delay);
       }
 
+    }
+
+    function speedUp() {
+      delay /= 2;
     }
 
     function gameOver(){ // FONCTION QUI INDIQUE "Game Over".
