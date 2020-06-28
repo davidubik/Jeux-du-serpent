@@ -7,6 +7,8 @@ window.onload = function()
   const heightInBlocks = canvasHeight/blockSize;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
+  const centerX = canvasWidth / 2;
+  const centerY = canvasHeight / 2;
   let delay = 100;
   let snakee;
   let applee;
@@ -74,8 +76,6 @@ window.onload = function()
       ctx.textBaseline = "middle";
       ctx.strokeStyle = "#fff";
       ctx.lineWidth = 3; // petit beug sur le contour du M à partir de 4px
-      const centerX = canvasWidth / 2;
-      const centerY = canvasHeight / 2;
       ctx.strokeText("GAME OVER", centerX, centerY - 180);
       ctx.fillText("GAME OVER", centerX, centerY - 180);
       ctx.font = "bold 30px sans-serif";
@@ -98,8 +98,6 @@ window.onload = function()
       ctx.fillStyle = "gray";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      const centerX = canvasWidth / 2;
-      const centerY = canvasHeight / 2;
       ctx.fillText(score.toString(), centerX, centerY);
       ctx.restore();
     }
