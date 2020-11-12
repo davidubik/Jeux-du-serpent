@@ -1,4 +1,4 @@
-window.onload = function()
+window.onload = () =>
 {
   const canvasWidth = 900;  //largeur du canvas de contour
   const canvasHeight = 600; // hauteur du canvas de contour
@@ -15,9 +15,9 @@ window.onload = function()
   let score;
   let timeout;
 
-  init();
+ 
 
-  function init()
+  const init = () =>
   {
     // const canvas = document.createElement('canvas');
     canvas.width = canvasWidth;
@@ -34,8 +34,17 @@ window.onload = function()
     refreshCanvas();
   }
 
-    function refreshCanvas()
-    {
+    const launch = () =>{
+      snakee = new Snake([[6,4],[5,4], [4,4], [3,4],[2,4]], "right");
+      applee = new Apple([[10,10]]);
+      score = 0;
+      clearTimeout(timeout);
+      delay = 100;
+      refreshCanvas();
+    }
+    
+
+    function refreshCanvas(){
       snakee.advence();
       if (snakee.checkCollision()) {
         gameOver();
@@ -64,11 +73,11 @@ window.onload = function()
 
     }
 
-    function speedUp() {
+   const speedUp = () => {
       delay /= 2;
-    }
+    } 
 
-    function gameOver(){ // FONCTION QUI INDIQUE "Game Over".
+    const gameOver = () =>{ // FONCTION QUI INDIQUE "Game Over".
       ctx.save();
       ctx.font = "bold 70px sans-serif";
       ctx.fillStyle = "#000";
@@ -84,7 +93,7 @@ window.onload = function()
       ctx.restore();
     }
 
-    function restart(){
+    const restart = () =>{
       snakee = new Snake([[6,4], [5,4], [4,4], [3,4], [2,4]], "right");
       applee = new Apple([10, 10]);
       score = 0;
@@ -92,7 +101,7 @@ window.onload = function()
       refreshCanvas();
     }
 
-    function drawScore() {
+    const drawScore = () => {
       ctx.save();
       ctx.font = "bold 200px sans-serif";
       ctx.fillStyle = "gray";
@@ -102,7 +111,7 @@ window.onload = function()
       ctx.restore();
     }
 
-    function drawBlock(ctx, position){
+    const drawBlock = (ctx, position) =>{
       const x = position[0] * blockSize;
       const y = position[1] * blockSize;
       ctx.fillRect(x, y, blockSize, blockSize)
@@ -202,13 +211,14 @@ window.onload = function()
 
     function Apple(position){ // FONCTION CONSTRUCTEUR DE LA POMME
       this.position = position;
+
       this.draw = function(){
-        ctx.save();
-        ctx.fillStyle = "chartreuse";
-        ctx.beginPath();
         const radius = blockSize / 2;
         const x = this.position[0] * blockSize + radius;
         const y = this.position[1] * blockSize + radius;
+        ctx.save();
+        ctx.fillStyle = "chartreuse";
+        ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI*2, true);
         ctx.fill();
         ctx.restore();
@@ -220,7 +230,7 @@ window.onload = function()
       };
       this.isOnSnake = (snakeToCheck) =>{ // METHOD QUI PERMET D'ÉVITER QUE LE POMME APPARAISSE SUR LE SERPENT
 
-        const isOnSnake = false;
+        let isOnSnake = false;
         for(let i in snakeToCheck.body) // LA BOUCLE PASSE SUR TOUTE LA LONGUEUR DU CORPS DU SERPENT
           {
             if (this.position[0] === snakeToCheck.body[i][0] && this.position[1] === snakeToCheck.body[i][1]){ // ON FÉRIFIE QUE LA POMME NE SE TROUVE PAS SUR LE X OU SUR LE Y
@@ -231,7 +241,7 @@ window.onload = function()
       };
     }
 
-    document.onkeydown = function handleKeyDown(e){  //Method couplé d'un évènement pour diriger le serpent
+    document.onkeydown = (e) =>{  //Method couplé d'un évènement pour diriger le serpent
       const key = e.keyCode;
       let newDirection;
       switch(key){
@@ -255,6 +265,6 @@ window.onload = function()
       }
       snakee.setDirection(newDirection);
     }
-
+    init();
 
 }
