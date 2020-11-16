@@ -117,102 +117,112 @@ window.onload = () =>
       ctx.fillRect(x, y, blockSize, blockSize)
     }
 
-    function Snake(body, direction){ // constructor du serpent
+// constructor du serpent
+    class Snake{
+
+      constructor(body, direction){
+
       this.body = body;
       this.direction = direction;
       this.ateApple = false;
-      this.draw = function(){
-        ctx.save();
-        ctx.fillStyle = "red";
-        for(let i = 0; i < this.body.length; i++){
-          drawBlock(ctx, this.body[i]);
-        }
-        ctx.restore();
-      };
-      this.advence = function(){  // Method pour l'animation du serpent
-        const nextPosition = this.body[0].slice();
-        switch (this.direction) {
-          case "left":
-          nextPosition[0] -= 1;
-            break;
-          case "right":
-          nextPosition[0] += 1;
+      }
+
+         draw(){
+            ctx.save();
+            ctx.fillStyle = "red";
+            for(let i = 0; i < this.body.length; i++){
+              drawBlock(ctx, this.body[i]);
+            }
+            ctx.restore();
+          };
+        advence(){  // Method pour l'animation du serpent
+          const nextPosition = this.body[0].slice();
+          switch (this.direction) {
+            case "left":
+            nextPosition[0] -= 1;
               break;
-          case "down":
-          nextPosition[1] += 1;
+            case "right":
+            nextPosition[0] += 1;
                 break;
-          case "up":
-          nextPosition[1] -= 1;
+            case "down":
+            nextPosition[1] += 1;
                   break;
-          default:
-            throw("Invalid Direction");
-        }
-        this.body.unshift(nextPosition);
-        if(!this.ateApple) // SI LE ateApple EST DIFFÉRENT (!)
-        this.body.pop();
-        else
-        this.ateApple = false;
-      };
-
-      this.setDirection = function (newDirection){ //Method pour diriger le serpent
-        let allowedDirections;
-        switch (this.direction) {
-          case "left":
-          case "right":
-          allowedDirections = ["up", "down"];
-                break;
-          case "down":
-          case "up":
-        allowedDirections = ["left", "right"];
-                break;
-              default:
+            case "up":
+            nextPosition[1] -= 1;
+                    break;
+            default:
               throw("Invalid Direction");
-        }
-        if (allowedDirections.indexOf(newDirection) > -1 ) {
-          this.direction = newDirection;
-        }
-      };
-      this.checkCollision = () =>{ // Method pour que le serpent se cogne contre un mur et ne sorte pas de Canvas
-
-        let wallCollision = false;
-        let snakeCollision = false;
-        const head = this.body[0];
-        const rest = this.body.slice(1);
-        const snakeX = head[0];
-        const snakeY = head[1];
-        const minX = 0;
-        const minY = 0;
-        const maxX = widthInBlocks -1;
-        const maxY = heightInBlocks -1;
-        const isNotBetweenHorizontalWalls = snakeX < minX || snakeX >  maxX;
-        const isNotBetweenVerticalWalls = snakeY < minY || snakeY >  maxY;
-
-        if (isNotBetweenHorizontalWalls || isNotBetweenVerticalWalls) {
-          wallCollision = true;
-        }
-        for(let i in rest){
-          if (snakeX === rest[i][0] && snakeY === rest[i][1]){
-            snakeCollision = true;
           }
-        }
-        return wallCollision || snakeCollision;
-      };
-      this.isEatingApple = (appconstoEat) =>
-      {
-        const head = this.body[0];
-        if (head[0] === appconstoEat.position[0] && head[1] === appconstoEat.position[1]) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      };
-    }
+          this.body.unshift(nextPosition);
+          if(!this.ateApple) // SI LE ateApple EST DIFFÉRENT (!)
+          this.body.pop();
+          else
+          this.ateApple = false;
+        };
 
-    function Apple(position){ // FONCTION CONSTRUCTEUR DE LA POMME
-      this.position = position;
+        setDirection(newDirection){ //Method pour diriger le serpent
+          let allowedDirections;
+          switch (this.direction) {
+            case "left":
+            case "right":
+            allowedDirections = ["up", "down"];
+                  break;
+            case "down":
+            case "up":
+          allowedDirections = ["left", "right"];
+                  break;
+                default:
+                throw("Invalid Direction");
+          }
+          if (allowedDirections.indexOf(newDirection) > -1 ) {
+            this.direction = newDirection;
+          }
+        };
+        checkCollision() { // Method pour que le serpent se cogne contre un mur et ne sorte pas de Canvas
 
-      this.draw = function(){
+          let wallCollision = false;
+          let snakeCollision = false;
+          const head = this.body[0];
+          const rest = this.body.slice(1);
+          const snakeX = head[0];
+          const snakeY = head[1];
+          const minX = 0;
+          const minY = 0;
+          const maxX = widthInBlocks -1;
+          const maxY = heightInBlocks -1;
+          const isNotBetweenHorizontalWalls = snakeX < minX || snakeX >  maxX;
+          const isNotBetweenVerticalWalls = snakeY < minY || snakeY >  maxY;
+
+          if (isNotBetweenHorizontalWalls || isNotBetweenVerticalWalls) {
+            wallCollision = true;
+          }
+          for(let i in rest){
+            if (snakeX === rest[i][0] && snakeY === rest[i][1]){
+              snakeCollision = true;
+            }
+          }
+          return wallCollision || snakeCollision;
+        };
+        isEatingApple(appconstoEat) 
+        {
+          const head = this.body[0];
+          if (head[0] === appconstoEat.position[0] && head[1] === appconstoEat.position[1]) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        };
+    } 
+ 
+
+    // FONCTION CONSTRUCTEUR DE LA POMME
+    class Apple{
+      constructor(position){
+        this.position = position;
+      }
+
+      draw(){
         const radius = blockSize / 2;
         const x = this.position[0] * blockSize + radius;
         const y = this.position[1] * blockSize + radius;
@@ -223,12 +233,12 @@ window.onload = () =>
         ctx.fill();
         ctx.restore();
       };
-      this.setNewPosition = () =>{ // METHOD POUR QUE LA POMME CHANGE DE POSITION QUAND ELLE À ÉTÉ MANGER PAR LER SERPENT
+      setNewPosition(){ // METHOD POUR QUE LA POMME CHANGE DE POSITION QUAND ELLE À ÉTÉ MANGER PAR LER SERPENT
         const newX = Math.round(Math.random() * (widthInBlocks -1));
         const newY = Math.round(Math.random() * (heightInBlocks -1));
         this.position =[newX, newY];
       };
-      this.isOnSnake = (snakeToCheck) =>{ // METHOD QUI PERMET D'ÉVITER QUE LE POMME APPARAISSE SUR LE SERPENT
+      isOnSnake(snakeToCheck){ // METHOD QUI PERMET D'ÉVITER QUE LE POMME APPARAISSE SUR LE SERPENT
 
         let isOnSnake = false;
         for(let i in snakeToCheck.body) // LA BOUCLE PASSE SUR TOUTE LA LONGUEUR DU CORPS DU SERPENT
@@ -241,6 +251,8 @@ window.onload = () =>
       };
     }
 
+
+   
     document.onkeydown = (e) =>{  //Method couplé d'un évènement pour diriger le serpent
       const key = e.keyCode;
       let newDirection;
