@@ -35,7 +35,7 @@ window.onload = () =>
   }
 
     const launch = () =>{
-      snakee = new Snake([[6,4],[5,4], [4,4], [3,4],[2,4]], "right");
+      snakee = new Snake([[6,4],[5,4],[4,4], [3,4],[2,4]], "right");
       applee = new Apple();
       score = 0;
       clearTimeout(timeout);
@@ -120,7 +120,7 @@ window.onload = () =>
 // constructor du serpent
     class Snake{
 
-      constructor(body, direction){
+      constructor(body,direction){
 
       this.body = body;
       this.direction = direction;
@@ -130,8 +130,8 @@ window.onload = () =>
          draw(){
             ctx.save();
             ctx.fillStyle = "red";
-            for(let i = 0; i < this.body.length; i++){
-              drawBlock(ctx, this.body[i]);
+            for(let block of this.body){
+              drawBlock(ctx, block);
             }
             ctx.restore();
           };
@@ -196,8 +196,8 @@ window.onload = () =>
           if (isNotBetweenHorizontalWalls || isNotBetweenVerticalWalls) {
             wallCollision = true;
           }
-          for(let i in rest){
-            if (snakeX === rest[i][0] && snakeY === rest[i][1]){
+          for(let block of rest){
+            if (snakeX === block[0] && snakeY === block[1]){
               snakeCollision = true;
             }
           }
@@ -241,9 +241,9 @@ window.onload = () =>
       isOnSnake(snakeToCheck){ // METHOD QUI PERMET D'ÉVITER QUE LE POMME APPARAISSE SUR LE SERPENT
 
         let isOnSnake = false;
-        for(let i in snakeToCheck.body) // LA BOUCLE PASSE SUR TOUTE LA LONGUEUR DU CORPS DU SERPENT
+        for(let block of snakeToCheck.body) // LA BOUCLE PASSE SUR TOUTE LA LONGUEUR DU CORPS DU SERPENT
           {
-            if (this.position[0] === snakeToCheck.body[i][0] && this.position[1] === snakeToCheck.body[i][1]){ // ON FÉRIFIE QUE LA POMME NE SE TROUVE PAS SUR LE X OU SUR LE Y
+            if (this.position[0] === block[0] && this.position[1] === block[1]){ // ON FÉRIFIE QUE LA POMME NE SE TROUVE PAS SUR LE X OU SUR LE Y
                isOnSnake = true;
             }
           }
