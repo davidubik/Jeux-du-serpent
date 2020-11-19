@@ -36,7 +36,7 @@ window.onload = () =>
 
     const launch = () =>{
       snakee = new Snake([[6,4],[5,4], [4,4], [3,4],[2,4]], "right");
-      applee = new Apple([[10,10]]);
+      applee = new Apple();
       score = 0;
       clearTimeout(timeout);
       delay = 100;
@@ -218,7 +218,7 @@ window.onload = () =>
 
     // FONCTION CONSTRUCTEUR DE LA POMME
     class Apple{
-      constructor(position){
+      constructor(position = [10, 10]){
         this.position = position;
       }
 
